@@ -27,4 +27,6 @@ VOLUME [ "/var/lib/mysql" ]
 
 EXPOSE 3306
 
+RUN chmod +x start.sh
+
 ENTRYPOINT [ "./start.sh" ]
