@@ -1,0 +1,9 @@
+ALPINE_VERSION=latest
+
+# Running
+MYSQL_ROOT_PASSWORD=password
+MYSQL_USER=default
+MYSQL_PASSWORD=secret
+MYSQL_DATABASE=default
+
+DATA_PATH_HOST=3306
