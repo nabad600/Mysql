@@ -1,32 +1,14 @@
-FROM alpine:3.7
+FROM alpine:latest
+MAINTAINER Naba Das <nabad600@gmail.com>
 
-LABEL MAINTAINER="Naba Kumar Das <nabad600@gmail.com>"
-LABEL APP="mariadb"
-LABEL APP_REPOSITORY="https://pkgs.alpinelinux.org/package/edge/main/aarch64/mysql"
+WORKDIR /app
+VOLUME /app
 
-ENV TIMEZONE Europe/Paris
-ENV MYSQL_ROOT_PASSWORD root
-ENV MYSQL_DATABASE app
-ENV MYSQL_USER app
-ENV MYSQL_PASSWORD app
-ENV MYSQL_USER_MONITORING monitoring
-ENV MYSQL_PASSWORD_MONITORING monitoring
+RUN apk add --update mysql mysql-client && rm -f /var/cache/apk/*
 
-# Installing packages MariaDB
-RUN apk add --no-cache mysql
-RUN addgroup mysql mysql
-
-# Work path
-WORKDIR /scripts
-
-# Copy of the MySQL startup script
-COPY start.sh start.sh
-
-# Creating the persistent volume
-VOLUME [ "/var/lib/mysql" ]
+# These lines moved to the end allow us to rebuild image quickly after only these files were modified.
+COPY startup.sh /startup.sh
+COPY my.cnf /etc/mysql/my.cnf
 
 EXPOSE 3306
-
-RUN chmod +x start.sh
-
-ENTRYPOINT [ "./start.sh" ]
+CMD ["/startup.sh"]
