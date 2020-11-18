@@ -27,9 +27,12 @@ else
 
   cat << EOF > $tfile
 USE mysql;
+SET authentication_string = PASSWORD('${MYSQL_ROOT_PASSWORD}'), password_expired = 'N'
+    WHERE User = 'root' AND Host = 'localhost';
+
 FLUSH PRIVILEGES;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY "$MYSQL_ROOT_PASSWORD" WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+#GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY "$MYSQL_ROOT_PASSWORD" WITH GRANT OPTION;
+#GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 ALTER USER 'root'@'localhost' IDENTIFIED BY '';
 EOF
 
