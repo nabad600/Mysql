@@ -12,4 +12,4 @@ COPY my.cnf /etc/mysql/my.cnf
 RUN chmod +x /startup.sh
 
 EXPOSE 3306
-CMD ["/startup.sh"]
+CMD ["mysqld"]
